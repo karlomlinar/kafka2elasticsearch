@@ -1,0 +1,40 @@
+buildscript {
+    repositories {
+        maven {
+            mavenCentral()
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "io.spring.gradle:dependency-management-plugin:${dependencyManagementPluginVersion}"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath "io.franzbecker:gradle-lombok:${lombokPluginVersion}"
+    }
+}
+
+dependencies {
+
+    subprojects {
+
+        group "${group}"
+        version "${version}"
+
+        apply plugin: "io.spring.dependency-management"
+        apply plugin: "java"
+        apply plugin: "groovy"
+
+        dependencyManagement {
+            imports {
+                mavenBom "org.springframework.boot:spring-boot-starter-parent:${springBootVersion}"
+            }
+
+            dependencies {
+                dependency "org.apache.kafka:kafka-streams:${kafkaStreamsVersion}"
+                dependency "org.spockframework:spock-core:${spockVersion}"
+                dependency "org.spockframework:spock-spring:${spockVersion}"
+                dependency "org.elasticsearch.client:elasticsearch-rest-client:${elasticsearchVersion}"
+            }
+        }
+    }
+
+}
