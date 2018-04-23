@@ -10,6 +10,10 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ESMessage {
-    MessageLog messageLog;
+    String id;
+    Integer networkId;
+    String status;
+    boolean isFinal;
+    long date;;
     List<MessagePrice> billing;
 }

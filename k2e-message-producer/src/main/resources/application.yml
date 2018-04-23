@@ -1,0 +1,5 @@
+kafka:
+  host: localhost
+  port: 9092
+  log-topic: message_log
+  price-topic: message_price

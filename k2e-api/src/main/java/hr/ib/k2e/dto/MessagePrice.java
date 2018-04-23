@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MessagePrice {
     String id;
-    String accountId;
+    Integer accountId;
     String messageLogId;
     Integer price;
     boolean isFinal;

@@ -14,5 +14,5 @@ public class MessageLog {
     Integer networkId;
     String status;
     boolean isFinal;
-    LocalDate date;
+    long date;
 }
