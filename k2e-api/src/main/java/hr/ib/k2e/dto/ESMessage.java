@@ -15,5 +15,5 @@ public class ESMessage {
     String status;
     boolean isFinal;
     long date;;
-    List<MessagePrice> billing;
+    MessagePrice billing;
 }

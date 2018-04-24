@@ -32,6 +32,7 @@ dependencies {
 
             dependencies {
                 dependency "org.apache.kafka:kafka-streams:${kafkaStreamsVersion}"
+                dependency "org.apache.kafka:kafka-clients:${kafkaClientsVersion}"
                 dependency "org.spockframework:spock-core:${spockVersion}"
                 dependency "org.spockframework:spock-spring:${spockVersion}"
                 dependency "org.elasticsearch.client:elasticsearch-rest-client:${elasticsearchVersion}"
