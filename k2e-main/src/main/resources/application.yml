@@ -4,3 +4,10 @@ kafka:
   application-id: k2e-stream
   log-topic: message_log
   price-topic: message_price
+
+elasticsearch:
+  username: elastic
+  password: changeme
+  url: localhost
+  port: 9200
+  scheme: http

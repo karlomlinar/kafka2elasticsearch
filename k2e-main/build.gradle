@@ -5,4 +5,5 @@ dependencies {
     compile ("org.springframework.kafka:spring-kafka")
     compile ("org.springframework.boot:spring-boot-starter")
     compile ("org.apache.kafka:kafka-streams")
+    compile ("org.elasticsearch.client:elasticsearch-rest-client")
 }
