@@ -6,8 +6,5 @@ kafka:
   price-topic: message_price
 
 elasticsearch:
-  username: elastic
-  password: changeme
   url: localhost
-  port: 9200
-  scheme: http
+  port: 9300
