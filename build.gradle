@@ -35,7 +35,6 @@ dependencies {
                 dependency "org.apache.kafka:kafka-clients:${kafkaClientsVersion}"
                 dependency "org.spockframework:spock-core:${spockVersion}"
                 dependency "org.spockframework:spock-spring:${spockVersion}"
-                dependency "org.elasticsearch.client:elasticsearch-rest-client:${elasticsearchVersion}"
                 dependency "org.elasticsearch.client:transport:${elasticsearchVersion}"
                 dependency "org.elasticsearch:elasticsearch:${elasticsearchVersion}"
                 dependency "org.elasticsearch.plugin:transport-netty4-client:${elasticsearchVersion}"
