@@ -82,9 +82,4 @@ public class ElasticsearchService {
 
         return params;
     }
-
-    public void closeAndFlush() {
-        bulkProcessor.close();
-    }
-
 }

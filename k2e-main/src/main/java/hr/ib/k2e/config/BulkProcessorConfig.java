@@ -51,5 +51,4 @@ public class BulkProcessorConfig {
                         BackoffPolicy.exponentialBackoff(TimeValue.timeValueMillis(100), 3))
                 .build();
     }
-
 }
