@@ -2,9 +2,15 @@ apply plugin: 'org.springframework.boot'
 
 dependencies {
     compile project(":k2e-api")
+
     compile ("org.springframework.kafka:spring-kafka")
     compile ("org.springframework.boot:spring-boot-starter")
     compile ("org.apache.kafka:kafka-streams")
     compile ("org.elasticsearch.client:elasticsearch-rest-client")
     compile ("org.elasticsearch.client:transport")
+
+    testCompile ("org.spockframework:spock-core")
+    testCompile ("org.apache.kafka:kafka-streams-test-utils")
+    testCompile ("cglib:cglib-nodep")
+    testCompile ("org.springframework.boot:spring-boot-starter-test")
 }

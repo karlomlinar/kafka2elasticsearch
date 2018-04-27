@@ -39,7 +39,6 @@ public class MessageProducerApplication {
     CommandLineRunner commandLineRunner() {
         return args -> {
             sendLogs();
-            Thread.sleep(16000);
             sendPrices();
         };
     }

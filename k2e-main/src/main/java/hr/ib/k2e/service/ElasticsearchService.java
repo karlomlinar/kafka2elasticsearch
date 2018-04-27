@@ -1,6 +1,5 @@
 package hr.ib.k2e.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import hr.ib.k2e.dto.ESMessage;
 import hr.ib.k2e.dto.MessagePrice;
 import org.elasticsearch.action.bulk.BulkProcessor;
@@ -19,17 +18,15 @@ import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 @Service
 public class ElasticsearchService {
 
-    private final ObjectMapper objectMapper;
-    private final BulkProcessor bulkProcessor;
-
     private static final String INDEX = "messageid";
     private static final String DOCUMENT = "messageLog";
     private static final String SCRIPT = "ctx._source.billing.add(params.billing)";
     private static final String SCRIPT_LANG = "painless";
 
+    private final BulkProcessor bulkProcessor;
+
     public ElasticsearchService(BulkProcessor bulkProcessor) {
         this.bulkProcessor = bulkProcessor;
-        objectMapper = new ObjectMapper();
     }
 
     public void bulkPartialUpsert(ESMessage message) {
@@ -54,21 +51,21 @@ public class ElasticsearchService {
         return new IndexRequest(INDEX, DOCUMENT, message.getMessageLog().getId()).source(
                 jsonBuilder()
                         .startObject()
-                        .field("id", message.getMessageLog().getId())
-                        .field("networkId", message.getMessageLog().getNetworkId())
-                        .field("status", message.getMessageLog().getStatus())
-                        .field("isFinal", message.getMessageLog().isFinal())
-                        .field("date", message.getMessageLog().getDate())
-                        .field("billing")
-                        .startArray()
-                        .startObject()
-                        .field("id", message.getMessagePrice().getId())
-                        .field("accountId", message.getMessagePrice().getAccountId())
-                        .field("messageLogId", message.getMessagePrice().getMessageLogId())
-                        .field("price", message.getMessagePrice().getPrice())
-                        .field("isFinal", message.getMessagePrice().isFinal())
-                        .endObject()
-                        .endArray()
+                            .field("id", message.getMessageLog().getId())
+                            .field("networkId", message.getMessageLog().getNetworkId())
+                            .field("status", message.getMessageLog().getStatus())
+                            .field("isFinal", message.getMessageLog().isFinal())
+                            .field("date", message.getMessageLog().getDate())
+                            .field("billing")
+                            .startArray()
+                                .startObject()
+                                    .field("id", message.getMessagePrice().getId())
+                                    .field("accountId", message.getMessagePrice().getAccountId())
+                                    .field("messageLogId", message.getMessagePrice().getMessageLogId())
+                                    .field("price", message.getMessagePrice().getPrice())
+                                    .field("isFinal", message.getMessagePrice().isFinal())
+                                .endObject()
+                            .endArray()
                         .endObject());
     }
 
@@ -84,6 +81,10 @@ public class ElasticsearchService {
         params.put("billing", nestedMapForUpdate);
 
         return params;
+    }
+
+    public void closeAndFlush() {
+        bulkProcessor.close();
     }
 
 }

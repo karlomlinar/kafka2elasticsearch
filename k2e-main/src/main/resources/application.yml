@@ -6,5 +6,5 @@ kafka:
   price-topic: message_price
 
 elasticsearch:
-  url: localhost
+  host: localhost
   port: 9300
