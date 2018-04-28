@@ -1,6 +1,6 @@
 rootProject.name = 'kafka-2-elasticsearch'
 include 'k2e-message-producer'
 include 'k2e-main'
-include 'k2e-e2e'
+//include 'k2e-e2e'
 include 'k2e-api'
 

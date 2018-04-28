@@ -5,6 +5,7 @@ import hr.ib.k2e.dto.MessagePrice;
 import org.elasticsearch.action.bulk.BulkProcessor;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.update.UpdateRequest;
+import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.script.Script;
 import org.elasticsearch.script.ScriptType;
 import org.springframework.stereotype.Service;
@@ -18,10 +19,10 @@ import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 @Service
 public class ElasticsearchService {
 
-    private static final String INDEX = "messageid";
-    private static final String DOCUMENT = "messageLog";
-    private static final String SCRIPT = "ctx._source.billing.add(params.billing)";
-    private static final String SCRIPT_LANG = "painless";
+    protected static final String INDEX = "messageid";
+    protected static final String DOCUMENT = "messageLog";
+    protected static final String SCRIPT = "ctx._source.billing.add(params.billing)";
+    protected static final String SCRIPT_LANG = "painless";
 
     private final BulkProcessor bulkProcessor;
 
@@ -41,35 +42,38 @@ public class ElasticsearchService {
         bulkProcessor.add(updateRequest);
     }
 
-    private UpdateRequest createUpdateRequest(String id, IndexRequest indexRequest, Map<String, Object> params) {
-        return  new UpdateRequest(INDEX, DOCUMENT, id)
+    public UpdateRequest createUpdateRequest(String id, IndexRequest indexRequest, Map<String, Object> params) {
+        return new UpdateRequest(INDEX, DOCUMENT, id)
                 .script(new Script(ScriptType.INLINE, SCRIPT_LANG, SCRIPT, params))
                 .upsert(indexRequest);
     }
 
-    private IndexRequest createIndexRequest(ESMessage message) throws IOException {
-        return new IndexRequest(INDEX, DOCUMENT, message.getMessageLog().getId()).source(
-                jsonBuilder()
-                        .startObject()
-                            .field("id", message.getMessageLog().getId())
-                            .field("networkId", message.getMessageLog().getNetworkId())
-                            .field("status", message.getMessageLog().getStatus())
-                            .field("isFinal", message.getMessageLog().isFinal())
-                            .field("date", message.getMessageLog().getDate())
-                            .field("billing")
-                            .startArray()
-                                .startObject()
-                                    .field("id", message.getMessagePrice().getId())
-                                    .field("accountId", message.getMessagePrice().getAccountId())
-                                    .field("messageLogId", message.getMessagePrice().getMessageLogId())
-                                    .field("price", message.getMessagePrice().getPrice())
-                                    .field("isFinal", message.getMessagePrice().isFinal())
-                                .endObject()
-                            .endArray()
-                        .endObject());
+    public IndexRequest createIndexRequest(ESMessage message) throws IOException {
+        return new IndexRequest(INDEX, DOCUMENT, message.getMessageLog().getId()).source(buildJson(message));
     }
 
-    private Map<String, Object> createParamsForUpdate(MessagePrice price) {
+    protected XContentBuilder buildJson(ESMessage message) throws IOException {
+        return jsonBuilder()
+                .startObject()
+                .field("id", message.getMessageLog().getId())
+                .field("networkId", message.getMessageLog().getNetworkId())
+                .field("status", message.getMessageLog().getStatus())
+                .field("isFinal", message.getMessageLog().isFinal())
+                .field("date", message.getMessageLog().getDate())
+                .field("billing")
+                .startArray()
+                .startObject()
+                .field("id", message.getMessagePrice().getId())
+                .field("accountId", message.getMessagePrice().getAccountId())
+                .field("messageLogId", message.getMessagePrice().getMessageLogId())
+                .field("price", message.getMessagePrice().getPrice())
+                .field("isFinal", message.getMessagePrice().isFinal())
+                .endObject()
+                .endArray()
+                .endObject();
+    }
+
+    public Map<String, Object> createParamsForUpdate(MessagePrice price) {
         Map<String, Object> nestedMapForUpdate = new HashMap<>();
         nestedMapForUpdate.put("id", price.getId());
         nestedMapForUpdate.put("accountId", price.getAccountId());
@@ -82,4 +86,5 @@ public class ElasticsearchService {
 
         return params;
     }
+
 }

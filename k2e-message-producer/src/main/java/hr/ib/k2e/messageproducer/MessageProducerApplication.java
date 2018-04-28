@@ -44,14 +44,14 @@ public class MessageProducerApplication {
     }
 
     private void sendLogs() throws JsonProcessingException {
-        MessageLog log = new MessageLog("nova", 4, "COMPLETED", false, LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
+        MessageLog log = new MessageLog("E2ETestId", 4, "COMPLETED", false, LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
         MessageLog log2 = new MessageLog("njl", 8, "COMPLETED", false, LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
         kafkaSend(logTopic, log.getId(), objectMapper.writeValueAsString(log));
         kafkaSend(logTopic, log2.getId(), objectMapper.writeValueAsString(log2));
     }
 
     private void sendPrices() throws JsonProcessingException {
-        MessagePrice price = new MessagePrice("abc", 1, "nova", 18, false);
+        MessagePrice price = new MessagePrice("abc", 1, "E2ETestId", 18, false);
         MessagePrice price2 = new MessagePrice("htz", 9, "kon", 8, false);
         kafkaSend(priceTopic, price.getMessageLogId(), objectMapper.writeValueAsString(price));
         kafkaSend(priceTopic, price2.getMessageLogId(), objectMapper.writeValueAsString(price2));

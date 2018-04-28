@@ -1,24 +1,17 @@
 package hr.ib.k2e
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import hr.ib.k2e.config.BulkProcessorConfig
 import hr.ib.k2e.config.StreamTopologyConfig
-import hr.ib.k2e.dto.ESMessage
 import hr.ib.k2e.dto.MessageLog
 import hr.ib.k2e.dto.MessagePrice
 import hr.ib.k2e.service.ElasticsearchService
 import hr.ib.k2e.util.MessageConverter
 import org.apache.kafka.common.serialization.Serdes
 import org.apache.kafka.common.serialization.StringSerializer
-import org.apache.kafka.streams.StreamsBuilder
 import org.apache.kafka.streams.StreamsConfig
-import org.apache.kafka.streams.Topology
 import org.apache.kafka.streams.TopologyTestDriver
 import org.apache.kafka.streams.errors.StreamsException
-import org.apache.kafka.streams.kstream.KStream
-import org.apache.kafka.streams.kstream.KTable
 import org.apache.kafka.streams.test.ConsumerRecordFactory
-import org.springframework.test.context.ContextConfiguration
 import spock.lang.Specification
 
 import java.time.LocalDateTime

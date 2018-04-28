@@ -13,37 +13,36 @@ buildscript {
     }
 }
 
-dependencies {
+subprojects {
 
-    subprojects {
+    group "${group}"
+    version "${version}"
 
-        group "${group}"
-        version "${version}"
+    apply plugin: "io.spring.dependency-management"
+    apply plugin: "java"
+    apply plugin: "groovy"
+    apply plugin: "io.franzbecker.gradle-lombok"
 
-        apply plugin: "io.spring.dependency-management"
-        apply plugin: "java"
-        apply plugin: "groovy"
-        apply plugin: "io.franzbecker.gradle-lombok"
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.boot:spring-boot-starter-parent:${springBootVersion}"
+        }
 
-        dependencyManagement {
-            imports {
-                mavenBom "org.springframework.boot:spring-boot-starter-parent:${springBootVersion}"
-            }
-
-            dependencies {
-                dependency "org.apache.kafka:kafka-streams:${kafkaStreamsVersion}"
-                dependency "org.apache.kafka:kafka-streams-test-utils:${kafkaStreamsVersion}"
-                dependency "org.apache.kafka:kafka-clients:${kafkaStreamsVersion}"
-                dependency "org.spockframework:spock-core:${spockVersion}"
-                dependency "org.spockframework:spock-spring:${spockVersion}"
-                dependency "org.elasticsearch.client:transport:${elasticsearchVersion}"
-                dependency "org.elasticsearch:elasticsearch:${elasticsearchVersion}"
-                dependency "org.elasticsearch.plugin:transport-netty4-client:${elasticsearchVersion}"
-                dependency "org.spockframework:spock-core:${spockVersion}"
-                dependency "org.spockframework:spock-spring:${spockVersion}"
-                dependency "cglib:cglib-nodep:${cglibVersion}"
-            }
+        dependencies {
+            dependency "org.apache.kafka:kafka-streams:${kafkaStreamsVersion}"
+            dependency "org.apache.kafka:kafka-streams-test-utils:${kafkaStreamsVersion}"
+            dependency "org.apache.kafka:kafka-clients:${kafkaStreamsVersion}"
+            dependency "org.spockframework:spock-core:${spockVersion}"
+            dependency "org.spockframework:spock-spring:${spockVersion}"
+            dependency "org.elasticsearch.client:transport:${elasticsearchVersion}"
+            dependency "org.elasticsearch:elasticsearch:${elasticsearchVersion}"
+            dependency "org.elasticsearch.plugin:transport-netty4-client:${elasticsearchVersion}"
+            dependency "org.spockframework:spock-core:${spockVersion}"
+            dependency "org.spockframework:spock-spring:${spockVersion}"
+            dependency "cglib:cglib-nodep:${cglibVersion}"
         }
     }
 
+    test.outputs.upToDateWhen { false }
 }
+

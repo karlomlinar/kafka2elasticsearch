@@ -45,7 +45,7 @@ public class BulkProcessorConfig {
                     }
                 }).setBulkActions(1000)
                 .setBulkSize(new ByteSizeValue(5, ByteSizeUnit.MB))
-                .setFlushInterval(TimeValue.timeValueSeconds(5))
+                .setFlushInterval(TimeValue.timeValueSeconds(1))
                 .setConcurrentRequests(1)
                 .setBackoffPolicy(
                         BackoffPolicy.exponentialBackoff(TimeValue.timeValueMillis(100), 3))

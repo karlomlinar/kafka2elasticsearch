@@ -1,7 +1,5 @@
 package hr.ib.k2e;
 
-import hr.ib.k2e.config.StreamTopologyConfig;
-import hr.ib.k2e.service.ElasticsearchService;
 import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.Topology;
 import org.springframework.beans.factory.annotation.Qualifier;

@@ -9,7 +9,10 @@ dependencies {
     compile ("org.elasticsearch.client:elasticsearch-rest-client")
     compile ("org.elasticsearch.client:transport")
 
+    testCompile project(":k2e-message-producer")
+
     testCompile ("org.spockframework:spock-core")
+    testCompile ("org.spockframework:spock-spring")
     testCompile ("org.apache.kafka:kafka-streams-test-utils")
     testCompile ("cglib:cglib-nodep")
     testCompile ("org.springframework.boot:spring-boot-starter-test")
