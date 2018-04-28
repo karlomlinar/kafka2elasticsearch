@@ -50,6 +50,7 @@ class ElasticsearchServiceIntegrationSpecification extends Specification {
             elasticsearchService.bulkPartialUpsert(esMessage)
         and: 'is then flushed'
             bulkProcessor.flush()
+            client.admin().indices().prepareRefresh(elasticsearchService.INDEX).get()
 
         then: 'a document with the inserted id exists'
             client.get(new GetRequest(elasticsearchService.INDEX, elasticsearchService.DOCUMENT, messageLog.id)).get().exists
