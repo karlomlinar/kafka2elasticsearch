@@ -1,5 +1,7 @@
 # KAFKA TO ELASTICSEARCH
 
+(Some tests were written poorly and forgotten and also they might fail. This was fixed on branch fix_test)
+
 ### PERQUISITES
  - Installed docker
  - Downloaded Elasticsearch ([Download link](https://www.elastic.co/downloads/past-releases/elasticsearch-6-2-2))
