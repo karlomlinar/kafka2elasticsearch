@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.test.context.ContextConfiguration
 import spock.lang.Specification
+import static org.awaitility.Awaitility.*;
 
 import java.time.LocalDateTime
 import java.time.ZoneOffset
@@ -58,10 +59,11 @@ class K2EApplicationE2ESpecification extends Specification {
             kafkaSend(logTopic, log2.getId(), objectMapper.writeValueAsString(log2))
             kafkaSend(priceTopic, price.getMessageLogId(), objectMapper.writeValueAsString(price))
             kafkaSend(priceTopic, price2.getMessageLogId(), objectMapper.writeValueAsString(price2))
-            Thread.sleep(2000)
+            //Thread.sleep(2000)
 
         then: 'document with a correct id should be inserted into kafka'
-            client.get(new GetRequest(index, document, id)).get(25, TimeUnit.SECONDS).exists
+            //client.get(new GetRequest(index, document, id)).get(25, TimeUnit.SECONDS).exists
+            await().atMost(5, TimeUnit.SECONDS).until{ client.get(new GetRequest(index, document, id)).get().exists}
 
     }
 

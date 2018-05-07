@@ -10,7 +10,12 @@ import org.elasticsearch.action.get.GetRequest
 import org.elasticsearch.client.transport.TransportClient
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.json.JsonbTester
 import spock.lang.Specification
+
+import java.util.concurrent.TimeUnit
+
+import static org.awaitility.Awaitility.await
 
 @SpringBootTest
 class ElasticsearchServiceIntegrationSpecification extends Specification {
@@ -68,9 +73,8 @@ class ElasticsearchServiceIntegrationSpecification extends Specification {
 
         then: 'after index refresh'
             client.admin().indices().prepareRefresh(elasticsearchService.INDEX).get()
-        and: 'inserted document should have billing list of size 2'
-            jsonSlurper.parseText(client.get(new GetRequest(elasticsearchService.INDEX, elasticsearchService.DOCUMENT, messageLog.id)).get().getSourceAsString()).billing.size == 2
-
+        then: 'inserted document should have billing list of size 2'
+            await().atMost(5, TimeUnit.SECONDS). until { client.get(new GetRequest(elasticsearchService.INDEX, elasticsearchService.DOCUMENT, messageLog.id)).get().getSourceAsString() == '''{"id":"someid","networkId":5,"status":"ACCEPTED","isFinal":false,"date":8,"billing":[{"id":"id","accountId":32,"messageLogId":"someid","price":6,"isFinal":false},{"accountId":432,"messageLogId":"someid","id":"i2","isFinal":true,"price":5}]}''' }
 
 
     }

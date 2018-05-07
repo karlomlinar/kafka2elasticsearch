@@ -40,6 +40,7 @@ subprojects {
             dependency "org.spockframework:spock-core:${spockVersion}"
             dependency "org.spockframework:spock-spring:${spockVersion}"
             dependency "cglib:cglib-nodep:${cglibVersion}"
+            dependency "org.awaitility:awaitility:${awaitilityVersion}"
         }
     }
 
