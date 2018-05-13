@@ -22,10 +22,22 @@ public class K2EApplication {
         this.topology = topology;
     }
 
+    /**
+     * Kafka stream configuration
+     */
     private final Properties streamProperties;
+
+    /**
+     * Kafka stream topology
+     */
     private final Topology topology;
 
 
+    /**
+     * Runs when it is contained within a {@link SpringApplication}.
+     * Starts the Kafka Streams application with the autowired Kafka Streams topology and properties.
+     * Closes the stream on shutdown.
+     */
     @Bean
     CommandLineRunner commandLineRunner() {
         return (String... args) -> {
