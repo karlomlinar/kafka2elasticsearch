@@ -27,3 +27,29 @@ To build project, execute ```./gradlew build``` at the root this project
 To run this project, cd to */k2e-main* and execute ```./gradlew bootrun```
 
 To send a couple of messages to test the app while it's running, cd to */k2e-message-producer* and execute ```./gradlew bootrun```
+
+```message_log``` message value example:
+
+```
+{  
+   "id":"E2ETestId",
+   "networkId":4,
+   "status":"COMPLETED",
+   "date":1526630605,
+   "final":false
+}
+```
+
+```message_price``` message value example:
+
+```
+{  
+   "id":"abc",
+   "accountId":1,
+   "messageLogId":"E2ETestId",
+   "price":18,
+   "final":false
+}
+```
+
+Message key in topic ```message_log``` is ```id```, in topic ```message_price``` the key is ```messageLogId```
